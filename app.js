@@ -1,4 +1,5 @@
 
+const env = require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
@@ -35,7 +36,7 @@ app.post("/", function (req, res) {
   const url = "https://us8.api.mailchimp.com/3.0/lists/cea7387de4";
   const options = {
     method: "POST",
-    auth: "ntn:541da67eb76c85b62bd4de23fdaa6bfd-us8"
+    auth: "ntn:"+process.env.API_KEY
   }
   const request = https.request(url, options, function (response) {
     response.on("data", function (data) {
@@ -47,7 +48,7 @@ app.post("/", function (req, res) {
       else{
         res.sendFile(__dirname + "/failure.html" )
       }
-      console.log(JSON.parse(data));
+      
     });
   });
   request.write(jsonData);
